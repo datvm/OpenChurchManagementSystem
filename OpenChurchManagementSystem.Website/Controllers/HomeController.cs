@@ -1,4 +1,6 @@
-﻿using System;
+﻿using OpenChurchManagementSystem.Website.Framework;
+using OpenChurchManagementSystem.Website.Models.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,12 +10,13 @@ namespace OpenChurchManagementSystem.Website.Controllers
 {
 
     [Authorize]
-    public class HomeController : Controller
+    public class HomeController : BaseChurchController
     {
         
         public ActionResult Index()
         {
-            return this.View();
+            var model = new ChurchViewModel(this.ChurchDomain.Church);
+            return this.View(model);
         }
 
     }

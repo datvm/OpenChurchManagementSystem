@@ -16,6 +16,7 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using OpenChurchManagementSystem.Website.Models.ViewModels;
 using System.Collections.Generic;
 using OpenChurchManagementSystem.Website.Models.Identities;
+using OpenChurchManagementSystem.Website.Framework;
 
 namespace OpenChurchManagementSystem.Website.Controllers
 {
@@ -24,17 +25,13 @@ namespace OpenChurchManagementSystem.Website.Controllers
     [RequireHttps]
 #endif
     [Authorize]
-    public class AccountController : Controller
+    public class AccountController : BaseChurchController
     {
         private ApplicationDbContext _dbContext;
         private ApplicationSignInManager _signInManager;
         private ApplicationUserManager _userManager;
         private ApplicationRoleManager _roleManager;
-
-        public AccountController()
-        {
-        }
-
+        
         public ApplicationDbContext DbContext
         {
             get
@@ -72,7 +69,7 @@ namespace OpenChurchManagementSystem.Website.Controllers
             {
                 if (this._userManager == null)
                 {
-                    var userStore = new ApplicationUserStore<ApplicationUser>(this.DbContext) { TenantId = 2 };
+                    var userStore = new ApplicationUserStore<ApplicationUser>(this.DbContext) { TenantId = this.ChurchId, };
                     this._userManager = new ApplicationUserManager(userStore);
                 }
 
