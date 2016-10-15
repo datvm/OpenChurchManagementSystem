@@ -1,0 +1,24 @@
+﻿@{ 
+    var churchInfo = this.ViewBag.ChurchInfo as ChurchViewModel;
+}
+
+<div class="sidebar" data-color="purple">
+    <div class="logo">
+        <a href="@this.Url.Action("Index", "Home")" class="simple-text">
+            @churchInfo.Name
+        </a>
+    </div>
+
+    <div class="sidebar-wrapper">
+        <ul class="nav">
+            <li>
+                <a href="dashboard.html">
+                    <i class="material-icons">dashboard</i>
+                    <p>Dashboard</p>
+                </a>
+            </li>
+        </ul>
+    </div>
+
+    <div class="sidebar-background" style="background-image: url(../assets/img/sidebar-1.jpg) "></div>
+</div>

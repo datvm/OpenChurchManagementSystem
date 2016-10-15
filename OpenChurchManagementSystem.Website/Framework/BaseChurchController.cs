@@ -7,6 +7,7 @@ using System.Web.Routing;
 using System.Web.Mvc;
 using OpenChurchManagementSystem.Website.Models.Entities;
 using OpenChurchManagementSystem.Website.Models.Entities.Services;
+using OpenChurchManagementSystem.Website.Models.ViewModels;
 
 namespace OpenChurchManagementSystem.Website.Framework
 {
@@ -24,6 +25,8 @@ namespace OpenChurchManagementSystem.Website.Framework
 
             this.ChurchDomain = this.Service<IChurchDomainService>()
                 .FindDomain(this.Request.Url.Host, this.Request.Url.Port);
+            this.ViewBag.ChurchDomainInfo = new ChurchDomainViewModel(this.ChurchDomain);
+            this.ViewBag.ChurchInfo = new ChurchViewModel(this.ChurchDomain.Church);
 
             base.OnActionExecuting(filterContext);
         }

@@ -1,0 +1,8 @@
+[
+  {
+    "outputFileName": "Content/MaterialKit/material-kit.min.css",
+    "inputFiles": [
+      "Content/MaterialKit/material-kit.css"
+    ]
+  }
+]
