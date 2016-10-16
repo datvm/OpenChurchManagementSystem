@@ -1,4 +1,4 @@
-﻿@{ 
+﻿@{
     var churchInfo = this.ViewBag.ChurchInfo as ChurchViewModel;
 }
 
@@ -10,11 +10,17 @@
     </div>
 
     <div class="sidebar-wrapper">
-        <ul class="nav">
+        <ul id="lnk-navigation" class="nav">
             <li>
-                <a href="dashboard.html">
+                <a href="@this.Url.Action("Index", "Home")">
                     <i class="material-icons">dashboard</i>
                     <p>Dashboard</p>
+                </a>
+            </li>
+            <li>
+                <a href="@this.Url.Action("Index", "Account")">
+                    <i class="material-icons">account_box</i>
+                    <p>Accounts</p>
                 </a>
             </li>
         </ul>

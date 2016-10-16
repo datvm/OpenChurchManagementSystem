@@ -1,6 +1,6 @@
 ﻿body.page-admin .main-panel > .content {
-  margin-top: 0;
-  min-height: calc(100vh - 110px); }
+  margin-top: 70px;
+  min-height: calc(100vh - 180px); }
 
 body.page-admin .nav > li {
   position: relative;

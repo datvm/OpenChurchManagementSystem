@@ -18,13 +18,25 @@
     @Styles.Render("~/styles/materialdashboard")
     @Styles.Render("~/styles/site")
     <link rel="stylesheet" href="~/Content/Pages/Admin.min.css" />
+
+    @this.RenderSection("Heads", required: false)
 </head>
 <body class="page-admin">
 
     <div class="wrapper">
-        @this.Html.Partial("SideBar", "Home")
+        @this.Html.Partial("SideBar")
 
         <div class="main-panel">
+            <nav class="navbar navbar-transparent navbar-absolute">
+                <div class="container-fluid">
+                    <div class="navbar-header">
+                        <a class="navbar-brand">
+                            @this.ViewBag.Title<div class="ripple-container"></div>
+                        </a>
+                    </div>
+                </div>
+            </nav>
+
             <div class="content">
                 <div class="container-fluid">
                     @this.RenderBody()
@@ -55,7 +67,15 @@
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
+
+
+
     @Scripts.Render("~/scripts/materialdashboard")
+
+
+    <script src="~/App/Pages/Admin/admin.js"></script>
+
+    @this.RenderSection("Scripts", required: false)
 </body>
 
 </html>
