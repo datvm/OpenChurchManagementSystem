@@ -7,10 +7,13 @@ using System.Web.Mvc;
 
 namespace OpenChurchManagementSystem.Website.Areas.Admin.Controllers
 {
+
+    [RoutePrefix("Admin")]
     public class HomeController : BaseChurchController
     {
-        
-        public ActionResult Index()
+
+        [Route("*parameters")]   
+        public ActionResult Index(string[] parameters)
         {
             return this.View();
         }

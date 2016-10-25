@@ -1,6 +1,14 @@
-﻿
-@{
-    ViewBag.Title = "Dashboard";
+﻿@section Heads {
+    <base href="/Admin" />
 }
 
+<admin></admin>
 
+@section Scripts {
+    <script>
+        System.import('Apps/Admin/main')
+            .catch(function (err) {
+                console.log(err);
+            });
+    </script>
+}

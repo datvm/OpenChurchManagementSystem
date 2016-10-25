@@ -23,57 +23,22 @@
 </head>
 <body class="page-admin">
 
-    <div class="wrapper">
-        @this.Html.Partial("SideBar")
-
-        <div class="main-panel">
-            <nav class="navbar navbar-transparent navbar-absolute">
-                <div class="container-fluid">
-                    <div class="navbar-header">
-                        <a class="navbar-brand">
-                            @this.ViewBag.Title<div class="ripple-container"></div>
-                        </a>
-                    </div>
-                </div>
-            </nav>
-
-            <div class="content">
-                <div class="container-fluid">
-                    @this.RenderBody()
-                </div>
-            </div>
-
-            <footer class="footer">
-                <div class="container-fluid">
-                    <nav class="pull-left">
-                        <ul>
-                            <li>
-                                <a href="@this.Url.Action("Index", "Home")">
-                                    Home
-                                </a>
-                            </li>
-                        </ul>
-                    </nav>
-
-                    <p class="copyright pull-right text-xs-right">
-                        &copy;2016 Dat Vo Minh, Open Church Management System,<br />
-                        a devoted project for God our LORD
-                    </p>
-                </div>
-            </footer>
-        </div>
-    </div>
+    @this.RenderBody()
 
     <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/tether/1.2.0/js/tether.min.js" integrity="sha384-Plbmg8JY28KFelvJVai01l8WyZzrYWG825m+cZ0eDDS1f7d/js6ikvy1+X+guPIB" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.4/js/bootstrap.min.js" integrity="sha384-VjEeINv9OSwtWFLAtmc4JCtEJXXBub00gtSnszmspDLCtC0I4z4nqz7rEFbIZLLU" crossorigin="anonymous"></script>
 
-
+    <!-- Angular -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="~/node_modules/core-js/client/shim.min.js"></script>
+    <script src="~/node_modules/zone.js/dist/zone.js"></script>
+    <script src="~/node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="~/node_modules/systemjs/dist/system.src.js"></script>
+    <!-- 2. Configure SystemJS -->
+    <script src="~/App/systemjs.config.js"></script>
 
     @Scripts.Render("~/scripts/materialdashboard")
-
-
-    <script src="~/App/Pages/Admin/admin.js"></script>
 
     @this.RenderSection("Scripts", required: false)
 </body>

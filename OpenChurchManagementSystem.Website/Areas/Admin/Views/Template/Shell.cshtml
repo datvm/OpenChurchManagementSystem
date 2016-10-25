@@ -1,0 +1,40 @@
+﻿<div class="wrapper">
+    <sidebar></sidebar>
+
+    <div class="main-panel">
+        <nav class="navbar navbar-transparent navbar-absolute">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a class="navbar-brand">
+                        <div class="ripple-container"></div>
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="content">
+            <div class="container-fluid">
+                <router-outlet></router-outlet>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <div class="container-fluid">
+                <nav class="pull-left">
+                    <ul>
+                        <li>
+                            <a href="@this.Url.Action("Index", "Home" )">
+                                Home
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+
+                <p class="copyright pull-right text-xs-right">
+                    &copy;2016 Dat Vo Minh, Open Church Management System,<br />
+                    a devoted project for God our LORD
+                </p>
+            </div>
+        </footer>
+    </div>
+</div>

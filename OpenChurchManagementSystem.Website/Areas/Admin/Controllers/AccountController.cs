@@ -11,12 +11,7 @@ namespace OpenChurchManagementSystem.Website.Areas.Admin.Controllers
     [Authorize(Roles = "SysAdmin,Admin")]
     public class AccountController : BaseChurchController
     {
-
-        public ActionResult Index()
-        {
-            return this.View();
-        }
-
+        
     }
 
 }
