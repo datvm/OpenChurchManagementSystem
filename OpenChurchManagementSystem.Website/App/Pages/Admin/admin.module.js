@@ -10,8 +10,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require("@angular/core");
 var platform_browser_1 = require("@angular/platform-browser");
+var forms_1 = require("@angular/forms");
+var http_1 = require('@angular/http');
+var datatable_module_1 = require("./../../Libs/DataTable/datatable.module");
 var Components = require("./Components/all.component");
 var admin_router_1 = require("./admin.router");
+var identity_service_1 = require("./Services/identity.service");
 var AdminModule = (function () {
     function AdminModule() {
     }
@@ -20,9 +24,12 @@ var AdminModule = (function () {
             imports: [
                 platform_browser_1.BrowserModule,
                 admin_router_1.AdminRoutingModule,
+                forms_1.FormsModule,
+                http_1.HttpModule,
+                datatable_module_1.DataTableModule,
             ],
-            declarations: [Components.HomeComponent, Components.ShellComponent, Components.SidebarComponent],
-            entryComponents: [Components.HomeComponent],
+            providers: [identity_service_1.IdentityService],
+            declarations: Components.AllComponents,
             bootstrap: [Components.ShellComponent],
         }), 
         __metadata('design:paramtypes', [])

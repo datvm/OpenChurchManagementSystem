@@ -14,7 +14,11 @@ var Components = require("./Components/all.component");
 var Routes = [
     {
         path: "",
-        component: [Components.ShellComponent],
+        component: Components.PageHomeComponent,
+    },
+    {
+        path: "Account",
+        component: Components.PageAccountComponent,
     },
 ];
 var AdminRoutingModule = (function () {

@@ -303,6 +303,7 @@
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App\Libs\DataTable\datatable.template.html" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -350,7 +351,9 @@
     <Content Include="Areas\Admin\Views\Home\Index.cshtml" />
     <Content Include="Areas\Admin\Views\Template\Shell.cshtml" />
     <Content Include="Areas\Admin\Views\Template\Sidebar.cshtml" />
-    <Content Include="Areas\Admin\Views\Template\Home.cshtml" />
+    <Content Include="Areas\Admin\Views\Template\PageHome.cshtml" />
+    <Content Include="Areas\Admin\Views\Template\AccountPanel.cshtml" />
+    <Content Include="Areas\Admin\Views\Template\PageAccount.cshtml" />
     <None Include="bundleconfig.json" />
     <None Include="compilerconfig.json" />
     <None Include="compilerconfig.json.defaults">
@@ -430,6 +433,7 @@
     <Content Include="typings.json" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="App\Models\" />
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
   </ItemGroup>
@@ -444,13 +448,18 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="App\Libs\DataTable\datatable.component.ts" />
+    <TypeScriptCompile Include="App\Libs\DataTable\datatable.module.ts" />
     <TypeScriptCompile Include="App\Pages\Admin\admin.module.ts" />
     <TypeScriptCompile Include="App\Pages\Admin\admin.router.ts" />
+    <TypeScriptCompile Include="App\Pages\Admin\Components\account-panel.component.ts" />
     <TypeScriptCompile Include="App\Pages\Admin\Components\all.component.ts" />
-    <TypeScriptCompile Include="App\Pages\Admin\Components\home.component.ts" />
+    <TypeScriptCompile Include="App\Pages\Admin\Components\page.account.component.ts" />
+    <TypeScriptCompile Include="App\Pages\Admin\Components\page.home.component.ts" />
     <TypeScriptCompile Include="App\Pages\Admin\Components\shell.component.ts" />
     <TypeScriptCompile Include="App\Pages\Admin\Components\sidebar.component.ts" />
     <TypeScriptCompile Include="App\Pages\Admin\main.ts" />
+    <TypeScriptCompile Include="App\Pages\Admin\Services\identity.service.ts" />
     <TypeScriptCompile Include="Scripts\typings\jquery\jquery.d.ts" />
   </ItemGroup>
   <PropertyGroup>

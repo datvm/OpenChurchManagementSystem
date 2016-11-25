@@ -11,7 +11,12 @@ namespace OpenChurchManagementSystem.Website.Models.Identities
 
         SysAdmin,
         Admin,
+        
+    }
 
+    public static class IdentityRoles
+    {
+        public const string AccountManagement = "SysAdmin,Admin";
     }
 
 }

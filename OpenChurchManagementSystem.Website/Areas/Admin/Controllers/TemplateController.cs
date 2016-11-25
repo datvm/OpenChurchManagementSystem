@@ -12,7 +12,12 @@ namespace OpenChurchManagementSystem.Website.Areas.Admin.Controllers
     public class TemplateController : BaseChurchController
     {
         
-        public ActionResult Home()
+        public ActionResult PageHome()
+        {
+            return this.PartialView();
+        }
+
+        public ActionResult PageAccount()
         {
             return this.PartialView();
         }
@@ -23,6 +28,11 @@ namespace OpenChurchManagementSystem.Website.Areas.Admin.Controllers
         }
 
         public ActionResult Sidebar()
+        {
+            return this.PartialView();
+        }
+
+        public ActionResult AccountPanel()
         {
             return this.PartialView();
         }

@@ -1,4 +1,5 @@
 ﻿import { Component } from "@angular/core";
+import { IdentityService } from "./../Services/identity.service";
 
 @Component({
     moduleId: module.id,
@@ -7,4 +8,10 @@
 })
 export class ShellComponent {
 
+    public Title: string = "Dashboard";
+
+    constructor(public Identity: IdentityService) {
+
+    }
+    
 }

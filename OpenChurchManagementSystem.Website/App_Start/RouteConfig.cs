@@ -14,6 +14,13 @@ namespace OpenChurchManagementSystem.Website
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
             routes.MapRoute(
+                name: "Admin Page",
+                url: "Admin/{*parameters}",
+                defaults: new { controller = "Home", action = "Index" },
+                namespaces: new[] { "OpenChurchManagementSystem.Website.Areas.Admin.Controllers" }
+            );
+
+            routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
                 defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },

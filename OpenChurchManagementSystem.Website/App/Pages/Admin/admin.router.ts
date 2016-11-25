@@ -5,7 +5,11 @@ import * as Components from "./Components/all.component";
 const Routes: any = [
     {
         path: "",
-        component: [Components.ShellComponent],
+        component: Components.PageHomeComponent,
+    },
+    {
+        path: "Account",
+        component: Components.PageAccountComponent,
     },
 ];
 

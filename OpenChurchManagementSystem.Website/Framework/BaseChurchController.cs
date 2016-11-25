@@ -8,6 +8,9 @@ using System.Web.Mvc;
 using OpenChurchManagementSystem.Website.Models.Entities;
 using OpenChurchManagementSystem.Website.Models.Entities.Services;
 using OpenChurchManagementSystem.Website.Models.ViewModels;
+using SkyWeb.DatVM.WebApi;
+using System.Web.Http.Controllers;
+using System.Net.Http;
 
 namespace OpenChurchManagementSystem.Website.Framework
 {
@@ -18,7 +21,7 @@ namespace OpenChurchManagementSystem.Website.Framework
         public int ChurchId { get; private set; }
         public ChurchDomain ChurchDomain { get; private set; }
         public string ResolvedIP { get; private set; }
-
+        
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
             this.ResolvedIP = this.Request.Headers["CF-Connecting-IP"] ?? this.Request.UserHostAddress;
@@ -29,6 +32,35 @@ namespace OpenChurchManagementSystem.Website.Framework
             this.ViewBag.ChurchInfo = new ChurchViewModel(this.ChurchDomain.Church);
 
             base.OnActionExecuting(filterContext);
+        }
+
+    }
+
+    public class BaseChurchApiController : BaseApiController
+    {
+
+        public int ChurchId { get; private set; }
+        public ChurchDomain ChurchDomain { get; private set; }
+        public string ResolvedIP { get; private set; }
+
+        protected override void Initialize(HttpControllerContext controllerContext)
+        {
+            var request = controllerContext.Request;
+
+            this.ResolvedIP = request.Headers.Contains("CF-Connecting-IP") ?
+                request.Headers.GetValues("CF-Connecting-IP").First() : 
+                this.GetClientIp();
+
+            var uri = controllerContext.Request.RequestUri;
+            this.ChurchDomain = this.Service<IChurchDomainService>()
+                .FindDomain(request.RequestUri.Host, request.RequestUri.Port);
+            
+            base.Initialize(controllerContext);
+        }
+
+        private string GetClientIp()
+        {
+            return HttpContext.Current?.Request?.UserHostAddress;
         }
 
     }

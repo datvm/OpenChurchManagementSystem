@@ -1,0 +1,14 @@
+﻿<ul class="nav navbar-nav navbar-right">
+    <li *ngIf="Identity.Authorized">
+        <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+            {{Identity.Username}}
+        </a>
+
+        <ul class="dropdown-menu">
+            <li><a href="#">Log Out</a></li>
+        </ul>
+    </li>
+    <li *ngIf="!Identity.Authorized">
+        <a>Please Login</a>
+    </li>
+</ul>

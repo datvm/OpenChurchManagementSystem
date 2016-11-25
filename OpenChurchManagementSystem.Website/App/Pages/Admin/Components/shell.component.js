@@ -9,8 +9,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require("@angular/core");
+var identity_service_1 = require("./../Services/identity.service");
 var ShellComponent = (function () {
-    function ShellComponent() {
+    function ShellComponent(Identity) {
+        this.Identity = Identity;
+        this.Title = "Dashboard";
     }
     ShellComponent = __decorate([
         core_1.Component({
@@ -18,7 +21,7 @@ var ShellComponent = (function () {
             selector: "admin",
             templateUrl: "/Admin/Template/Shell",
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [identity_service_1.IdentityService])
     ], ShellComponent);
     return ShellComponent;
 }());
