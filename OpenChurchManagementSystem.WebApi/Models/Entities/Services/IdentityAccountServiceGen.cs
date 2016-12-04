@@ -7,20 +7,20 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OpenChurchManagementSystem.WebApi.Models.Entities
+namespace OpenChurchManagementSystem.WebApi.Models.Entities.Services
 {
     using System;
     using System.Collections.Generic;
     
-    public partial class ChurchDomain
-    {
-        public int Id { get; set; }
-        public int ChurchId { get; set; }
-        public string Protocol { get; set; }
-        public string Hostname { get; set; }
-        public int Port { get; set; }
-        public bool Active { get; set; }
     
-        public virtual Church Church { get; set; }
+    public partial interface IIdentityAccountService : SkyWeb.DatVM.Data.IBaseService<IdentityAccount>
+    {
+    }
+    
+    public partial class IdentityAccountService : SkyWeb.DatVM.Data.BaseService<IdentityAccount>, IIdentityAccountService
+    {
+        public IdentityAccountService(SkyWeb.DatVM.Data.IUnitOfWork unitOfWork, Repositories.IIdentityAccountRepository repository) : base(unitOfWork, repository)
+        {
+        }
     }
 }

@@ -25,8 +25,11 @@ namespace OpenChurchManagementSystem.WebApi.Models.Entities
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<AspNetUser> AspNetUsers { get; set; }
         public virtual DbSet<Church> Churches { get; set; }
         public virtual DbSet<ChurchDomain> ChurchDomains { get; set; }
+        public virtual DbSet<IdentityAccount> IdentityAccounts { get; set; }
+        public virtual DbSet<IdentityAccountRole> IdentityAccountRoles { get; set; }
+        public virtual DbSet<IdentityClaim> IdentityClaims { get; set; }
+        public virtual DbSet<IdentityRole> IdentityRoles { get; set; }
     }
 }

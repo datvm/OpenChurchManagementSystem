@@ -7,20 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OpenChurchManagementSystem.WebApi.Models.Entities.Repositories
+namespace OpenChurchManagementSystem.WebApi.Models.ViewModels
 {
     using System;
     using System.Collections.Generic;
     
-    
-    public partial interface IAspNetUserRepository : SkyWeb.DatVM.Data.IBaseRepository<AspNetUser>
+    public partial class IdentityRoleViewModel : SkyWeb.DatVM.Mvc.BaseEntityViewModel<OpenChurchManagementSystem.WebApi.Models.Entities.IdentityRole>
     {
-    }
+    	
+    			public virtual string Id { get; set; }
+    			public virtual string Name { get; set; }
+    	
+    	public IdentityRoleViewModel() : base() { }
+    	public IdentityRoleViewModel(OpenChurchManagementSystem.WebApi.Models.Entities.IdentityRole entity) : base(entity) { }
     
-    public partial class AspNetUserRepository : SkyWeb.DatVM.Data.BaseRepository<AspNetUser>, IAspNetUserRepository
-    {
-    	public AspNetUserRepository(System.Data.Entity.DbContext dbContext) : base(dbContext)
-        {
-        }
     }
 }

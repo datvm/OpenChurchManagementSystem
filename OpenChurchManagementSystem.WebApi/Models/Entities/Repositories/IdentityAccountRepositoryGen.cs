@@ -7,19 +7,19 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace OpenChurchManagementSystem.WebApi.Models.Entities.Services
+namespace OpenChurchManagementSystem.WebApi.Models.Entities.Repositories
 {
     using System;
     using System.Collections.Generic;
     
     
-    public partial interface IAspNetUserService : SkyWeb.DatVM.Data.IBaseService<AspNetUser>
+    public partial interface IIdentityAccountRepository : SkyWeb.DatVM.Data.IBaseRepository<IdentityAccount>
     {
     }
     
-    public partial class AspNetUserService : SkyWeb.DatVM.Data.BaseService<AspNetUser>, IAspNetUserService
+    public partial class IdentityAccountRepository : SkyWeb.DatVM.Data.BaseRepository<IdentityAccount>, IIdentityAccountRepository
     {
-        public AspNetUserService(SkyWeb.DatVM.Data.IUnitOfWork unitOfWork, Repositories.IAspNetUserRepository repository) : base(unitOfWork, repository)
+    	public IdentityAccountRepository(System.Data.Entity.DbContext dbContext) : base(dbContext)
         {
         }
     }

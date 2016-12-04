@@ -12,18 +12,21 @@ namespace OpenChurchManagementSystem.WebApi.Models.ViewModels
     using System;
     using System.Collections.Generic;
     
-    public partial class ChurchDomainViewModel : SkyWeb.DatVM.Mvc.BaseEntityViewModel<OpenChurchManagementSystem.WebApi.Models.Entities.ChurchDomain>
+    public partial class IdentityAccountViewModel : SkyWeb.DatVM.Mvc.BaseEntityViewModel<OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccount>
     {
     	
     			public virtual int Id { get; set; }
     			public virtual int ChurchId { get; set; }
-    			public virtual string Protocol { get; set; }
-    			public virtual string Hostname { get; set; }
-    			public virtual int Port { get; set; }
+    			public virtual string UserName { get; set; }
+    			public virtual string Email { get; set; }
+    			public virtual string PasswordHash { get; set; }
+    			public virtual string SecurityStamp { get; set; }
+    			public virtual string AdminNote { get; set; }
+    			public virtual string SysAdminNote { get; set; }
     			public virtual bool Active { get; set; }
     	
-    	public ChurchDomainViewModel() : base() { }
-    	public ChurchDomainViewModel(OpenChurchManagementSystem.WebApi.Models.Entities.ChurchDomain entity) : base(entity) { }
+    	public IdentityAccountViewModel() : base() { }
+    	public IdentityAccountViewModel(OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccount entity) : base(entity) { }
     
     }
 }

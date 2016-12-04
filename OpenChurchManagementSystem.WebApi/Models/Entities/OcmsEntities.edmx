@@ -4,31 +4,13 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="OpenChurchManagementSystem.WebApi.Models.Entities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-        <EntityType Name="AspNetUsers">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="nvarchar" MaxLength="128" Nullable="false" />
-          <Property Name="TenantId" Type="int" Nullable="false" />
-          <Property Name="Email" Type="nvarchar" MaxLength="256" />
-          <Property Name="EmailConfirmed" Type="bit" Nullable="false" />
-          <Property Name="PasswordHash" Type="nvarchar(max)" />
-          <Property Name="SecurityStamp" Type="nvarchar(max)" />
-          <Property Name="PhoneNumber" Type="nvarchar(max)" />
-          <Property Name="PhoneNumberConfirmed" Type="bit" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="bit" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="datetime" />
-          <Property Name="LockoutEnabled" Type="bit" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="int" Nullable="false" />
-          <Property Name="UserName" Type="nvarchar" MaxLength="256" Nullable="false" />
-        </EntityType>
+    <Schema Namespace="OpenChurchManagementSystem.WebApi.Models.Entities.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Church">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="200" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" />
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
@@ -38,22 +20,50 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="ChurchId" Type="int" Nullable="false" />
+          <Property Name="Protocol" Type="varchar" MaxLength="10" Nullable="false" />
           <Property Name="Hostname" Type="nvarchar" MaxLength="255" Nullable="false" />
           <Property Name="Port" Type="int" Nullable="false" />
           <Property Name="Active" Type="bit" Nullable="false" />
         </EntityType>
-        <Association Name="FK_AspNetUsers_Church">
-          <End Role="Church" Type="Self.Church" Multiplicity="1" />
-          <End Role="AspNetUsers" Type="Self.AspNetUsers" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Church">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUsers">
-              <PropertyRef Name="TenantId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="IdentityAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ChurchId" Type="int" Nullable="false" />
+          <Property Name="UserName" Type="nvarchar" MaxLength="255" Nullable="false" />
+          <Property Name="Email" Type="nvarchar" MaxLength="255" />
+          <Property Name="PasswordHash" Type="nvarchar(max)" />
+          <Property Name="SecurityStamp" Type="nvarchar(max)" />
+          <Property Name="AdminNote" Type="nvarchar(max)" />
+          <Property Name="SysAdminNote" Type="nvarchar(max)" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentityAccountRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdentityAccountId" Type="int" Nullable="false" />
+          <Property Name="IdentityRoleId" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Active" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IdentityClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="UserId" Type="int" Nullable="false" />
+          <Property Name="ClaimType" Type="nvarchar(max)" />
+          <Property Name="ClaimValue" Type="nvarchar(max)" />
+        </EntityType>
+        <EntityType Name="IdentityRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <Association Name="FK_ChurchDomain_Church">
           <End Role="Church" Type="Self.Church" Multiplicity="1" />
           <End Role="ChurchDomain" Type="Self.ChurchDomain" Multiplicity="*" />
@@ -66,53 +76,124 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_IdentityAccount_Church">
+          <End Role="Church" Type="Self.Church" Multiplicity="1" />
+          <End Role="IdentityAccount" Type="Self.IdentityAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Church">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityAccount">
+              <PropertyRef Name="ChurchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityAccountRole_IdentityAccount">
+          <End Role="IdentityAccount" Type="Self.IdentityAccount" Multiplicity="1" />
+          <End Role="IdentityAccountRole" Type="Self.IdentityAccountRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityAccountRole">
+              <PropertyRef Name="IdentityAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityAccountRole_IdentityRole">
+          <End Role="IdentityRole" Type="Self.IdentityRole" Multiplicity="1" />
+          <End Role="IdentityAccountRole" Type="Self.IdentityAccountRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityAccountRole">
+              <PropertyRef Name="IdentityRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityClaim_IdentityAccount">
+          <End Role="IdentityAccount" Type="Self.IdentityAccount" Multiplicity="1" />
+          <End Role="IdentityClaim" Type="Self.IdentityClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="OpenChurchManagementSystemWebApiModelsEntitiesStoreContainer">
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUsers" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Church" EntityType="Self.Church" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="ChurchDomain" EntityType="Self.ChurchDomain" Schema="dbo" store:Type="Tables" />
-          <AssociationSet Name="FK_AspNetUsers_Church" Association="Self.FK_AspNetUsers_Church">
-            <End Role="Church" EntitySet="Church" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
+          <EntitySet Name="IdentityAccount" EntityType="Self.IdentityAccount" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityAccountRole" EntityType="Self.IdentityAccountRole" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityClaim" EntityType="Self.IdentityClaim" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IdentityRole" EntityType="Self.IdentityRole" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_ChurchDomain_Church" Association="Self.FK_ChurchDomain_Church">
             <End Role="Church" EntitySet="Church" />
             <End Role="ChurchDomain" EntitySet="ChurchDomain" />
           </AssociationSet>
+          <AssociationSet Name="FK_IdentityAccount_Church" Association="Self.FK_IdentityAccount_Church">
+            <End Role="Church" EntitySet="Church" />
+            <End Role="IdentityAccount" EntitySet="IdentityAccount" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityAccountRole_IdentityAccount" Association="Self.FK_IdentityAccountRole_IdentityAccount">
+            <End Role="IdentityAccount" EntitySet="IdentityAccount" />
+            <End Role="IdentityAccountRole" EntitySet="IdentityAccountRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityAccountRole_IdentityRole" Association="Self.FK_IdentityAccountRole_IdentityRole">
+            <End Role="IdentityRole" EntitySet="IdentityRole" />
+            <End Role="IdentityAccountRole" EntitySet="IdentityAccountRole" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityClaim_IdentityAccount" Association="Self.FK_IdentityClaim_IdentityAccount">
+            <End Role="IdentityAccount" EntitySet="IdentityAccount" />
+            <End Role="IdentityClaim" EntitySet="IdentityClaim" />
+          </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="OpenChurchManagementSystem.WebApi.Models.Entities" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="AspNetUser">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="TenantId" Type="Int32" Nullable="false" />
-          <Property Name="Email" Type="String" MaxLength="256" FixedLength="false" Unicode="true" />
-          <Property Name="EmailConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumber" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="PhoneNumberConfirmed" Type="Boolean" Nullable="false" />
-          <Property Name="TwoFactorEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="LockoutEndDateUtc" Type="DateTime" Precision="3" />
-          <Property Name="LockoutEnabled" Type="Boolean" Nullable="false" />
-          <Property Name="AccessFailedCount" Type="Int32" Nullable="false" />
-          <Property Name="UserName" Type="String" MaxLength="256" FixedLength="false" Unicode="true" Nullable="false" />
-          <NavigationProperty Name="Church" Relationship="Self.FK_AspNetUsers_Church" FromRole="AspNetUsers" ToRole="Church" />
-        </EntityType>
+        <EntityContainer Name="OcmsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Churches" EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.Church" />
+          <EntitySet Name="ChurchDomains" EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.ChurchDomain" />
+          <EntitySet Name="IdentityAccounts" EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccount" />
+          <EntitySet Name="IdentityAccountRoles" EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccountRole" />
+          <EntitySet Name="IdentityClaims" EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityClaim" />
+          <EntitySet Name="IdentityRoles" EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityRole" />
+          <AssociationSet Name="FK_ChurchDomain_Church" Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_ChurchDomain_Church">
+            <End Role="Church" EntitySet="Churches" />
+            <End Role="ChurchDomain" EntitySet="ChurchDomains" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityAccount_Church" Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccount_Church">
+            <End Role="Church" EntitySet="Churches" />
+            <End Role="IdentityAccount" EntitySet="IdentityAccounts" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityAccountRole_IdentityAccount" Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccountRole_IdentityAccount">
+            <End Role="IdentityAccount" EntitySet="IdentityAccounts" />
+            <End Role="IdentityAccountRole" EntitySet="IdentityAccountRoles" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityClaim_IdentityAccount" Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityClaim_IdentityAccount">
+            <End Role="IdentityAccount" EntitySet="IdentityAccounts" />
+            <End Role="IdentityClaim" EntitySet="IdentityClaims" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IdentityAccountRole_IdentityRole" Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccountRole_IdentityRole">
+            <End Role="IdentityRole" EntitySet="IdentityRoles" />
+            <End Role="IdentityAccountRole" EntitySet="IdentityAccountRoles" />
+          </AssociationSet>
+        </EntityContainer>
         <EntityType Name="Church">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="AspNetUsers" Relationship="Self.FK_AspNetUsers_Church" FromRole="Church" ToRole="AspNetUsers" />
-          <NavigationProperty Name="ChurchDomains" Relationship="Self.FK_ChurchDomain_Church" FromRole="Church" ToRole="ChurchDomain" />
+          <NavigationProperty Name="ChurchDomains" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_ChurchDomain_Church" FromRole="Church" ToRole="ChurchDomain" />
+          <NavigationProperty Name="IdentityAccounts" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccount_Church" FromRole="Church" ToRole="IdentityAccount" />
         </EntityType>
         <EntityType Name="ChurchDomain">
           <Key>
@@ -120,26 +201,61 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="ChurchId" Type="Int32" Nullable="false" />
-          <Property Name="Hostname" Type="String" MaxLength="255" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Protocol" Type="String" Nullable="false" MaxLength="10" FixedLength="false" Unicode="false" />
+          <Property Name="Hostname" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
           <Property Name="Port" Type="Int32" Nullable="false" />
           <Property Name="Active" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Church" Relationship="Self.FK_ChurchDomain_Church" FromRole="ChurchDomain" ToRole="Church" />
+          <NavigationProperty Name="Church" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_ChurchDomain_Church" FromRole="ChurchDomain" ToRole="Church" />
         </EntityType>
-        <Association Name="FK_AspNetUsers_Church">
-          <End Role="Church" Type="Self.Church" Multiplicity="1" />
-          <End Role="AspNetUsers" Type="Self.AspNetUser" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Church">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="AspNetUsers">
-              <PropertyRef Name="TenantId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
+        <EntityType Name="IdentityAccount">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ChurchId" Type="Int32" Nullable="false" />
+          <Property Name="UserName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="Email" Type="String" MaxLength="255" FixedLength="false" Unicode="true" />
+          <Property Name="PasswordHash" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SecurityStamp" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="AdminNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="SysAdminNote" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Church" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccount_Church" FromRole="IdentityAccount" ToRole="Church" />
+          <NavigationProperty Name="IdentityAccountRoles" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccountRole_IdentityAccount" FromRole="IdentityAccount" ToRole="IdentityAccountRole" />
+          <NavigationProperty Name="IdentityClaims" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityClaim_IdentityAccount" FromRole="IdentityAccount" ToRole="IdentityClaim" />
+        </EntityType>
+        <EntityType Name="IdentityAccountRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="IdentityAccountId" Type="Int32" Nullable="false" />
+          <Property Name="IdentityRoleId" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Active" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="IdentityAccount" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccountRole_IdentityAccount" FromRole="IdentityAccountRole" ToRole="IdentityAccount" />
+          <NavigationProperty Name="IdentityRole" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccountRole_IdentityRole" FromRole="IdentityAccountRole" ToRole="IdentityRole" />
+        </EntityType>
+        <EntityType Name="IdentityClaim">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="UserId" Type="Int32" Nullable="false" />
+          <Property Name="ClaimType" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="ClaimValue" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IdentityAccount" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityClaim_IdentityAccount" FromRole="IdentityClaim" ToRole="IdentityAccount" />
+        </EntityType>
+        <EntityType Name="IdentityRole">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="IdentityAccountRoles" Relationship="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccountRole_IdentityRole" FromRole="IdentityRole" ToRole="IdentityAccountRole" />
+        </EntityType>
         <Association Name="FK_ChurchDomain_Church">
-          <End Role="Church" Type="Self.Church" Multiplicity="1" />
-          <End Role="ChurchDomain" Type="Self.ChurchDomain" Multiplicity="*" />
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.Church" Role="Church" Multiplicity="1" />
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.ChurchDomain" Role="ChurchDomain" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Church">
               <PropertyRef Name="Id" />
@@ -149,62 +265,122 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityContainer Name="OcmsEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="AspNetUsers" EntityType="Self.AspNetUser" />
-          <EntitySet Name="Churches" EntityType="Self.Church" />
-          <EntitySet Name="ChurchDomains" EntityType="Self.ChurchDomain" />
-          <AssociationSet Name="FK_AspNetUsers_Church" Association="Self.FK_AspNetUsers_Church">
-            <End Role="Church" EntitySet="Churches" />
-            <End Role="AspNetUsers" EntitySet="AspNetUsers" />
-          </AssociationSet>
-          <AssociationSet Name="FK_ChurchDomain_Church" Association="Self.FK_ChurchDomain_Church">
-            <End Role="Church" EntitySet="Churches" />
-            <End Role="ChurchDomain" EntitySet="ChurchDomains" />
-          </AssociationSet>
-        </EntityContainer>
-      </Schema>
+        <Association Name="FK_IdentityAccount_Church">
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.Church" Role="Church" Multiplicity="1" />
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccount" Role="IdentityAccount" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Church">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityAccount">
+              <PropertyRef Name="ChurchId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityAccountRole_IdentityAccount">
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccount" Role="IdentityAccount" Multiplicity="1" />
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccountRole" Role="IdentityAccountRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityAccountRole">
+              <PropertyRef Name="IdentityAccountId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityClaim_IdentityAccount">
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccount" Role="IdentityAccount" Multiplicity="1" />
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityClaim" Role="IdentityClaim" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityAccount">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityClaim">
+              <PropertyRef Name="UserId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_IdentityAccountRole_IdentityRole">
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityRole" Role="IdentityRole" Multiplicity="1" />
+          <End Type="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccountRole" Role="IdentityAccountRole" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IdentityRole">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IdentityAccountRole">
+              <PropertyRef Name="IdentityRoleId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="OpenChurchManagementSystemWebApiModelsEntitiesStoreContainer" CdmEntityContainer="OcmsEntities">
-          <EntitySetMapping Name="AspNetUsers">
-            <EntityTypeMapping TypeName="OpenChurchManagementSystem.WebApi.Models.Entities.AspNetUser">
-              <MappingFragment StoreEntitySet="AspNetUsers">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="TenantId" ColumnName="TenantId" />
-                <ScalarProperty Name="Email" ColumnName="Email" />
-                <ScalarProperty Name="EmailConfirmed" ColumnName="EmailConfirmed" />
-                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
-                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
-                <ScalarProperty Name="PhoneNumber" ColumnName="PhoneNumber" />
-                <ScalarProperty Name="PhoneNumberConfirmed" ColumnName="PhoneNumberConfirmed" />
-                <ScalarProperty Name="TwoFactorEnabled" ColumnName="TwoFactorEnabled" />
-                <ScalarProperty Name="LockoutEndDateUtc" ColumnName="LockoutEndDateUtc" />
-                <ScalarProperty Name="LockoutEnabled" ColumnName="LockoutEnabled" />
-                <ScalarProperty Name="AccessFailedCount" ColumnName="AccessFailedCount" />
-                <ScalarProperty Name="UserName" ColumnName="UserName" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Churches">
             <EntityTypeMapping TypeName="OpenChurchManagementSystem.WebApi.Models.Entities.Church">
               <MappingFragment StoreEntitySet="Church">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
           <EntitySetMapping Name="ChurchDomains">
             <EntityTypeMapping TypeName="OpenChurchManagementSystem.WebApi.Models.Entities.ChurchDomain">
               <MappingFragment StoreEntitySet="ChurchDomain">
-                <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="ChurchId" ColumnName="ChurchId" />
-                <ScalarProperty Name="Hostname" ColumnName="Hostname" />
-                <ScalarProperty Name="Port" ColumnName="Port" />
                 <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="Port" ColumnName="Port" />
+                <ScalarProperty Name="Hostname" ColumnName="Hostname" />
+                <ScalarProperty Name="Protocol" ColumnName="Protocol" />
+                <ScalarProperty Name="ChurchId" ColumnName="ChurchId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityAccounts">
+            <EntityTypeMapping TypeName="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccount">
+              <MappingFragment StoreEntitySet="IdentityAccount">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="SysAdminNote" ColumnName="SysAdminNote" />
+                <ScalarProperty Name="AdminNote" ColumnName="AdminNote" />
+                <ScalarProperty Name="SecurityStamp" ColumnName="SecurityStamp" />
+                <ScalarProperty Name="PasswordHash" ColumnName="PasswordHash" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="UserName" ColumnName="UserName" />
+                <ScalarProperty Name="ChurchId" ColumnName="ChurchId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityAccountRoles">
+            <EntityTypeMapping TypeName="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccountRole">
+              <MappingFragment StoreEntitySet="IdentityAccountRole">
+                <ScalarProperty Name="Active" ColumnName="Active" />
+                <ScalarProperty Name="IdentityRoleId" ColumnName="IdentityRoleId" />
+                <ScalarProperty Name="IdentityAccountId" ColumnName="IdentityAccountId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityClaims">
+            <EntityTypeMapping TypeName="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityClaim">
+              <MappingFragment StoreEntitySet="IdentityClaim">
+                <ScalarProperty Name="ClaimValue" ColumnName="ClaimValue" />
+                <ScalarProperty Name="ClaimType" ColumnName="ClaimType" />
+                <ScalarProperty Name="UserId" ColumnName="UserId" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IdentityRoles">
+            <EntityTypeMapping TypeName="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityRole">
+              <MappingFragment StoreEntitySet="IdentityRole">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -12,15 +12,14 @@ namespace OpenChurchManagementSystem.WebApi.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class ChurchDomain
+    public partial class IdentityAccountRole
     {
         public int Id { get; set; }
-        public int ChurchId { get; set; }
-        public string Protocol { get; set; }
-        public string Hostname { get; set; }
-        public int Port { get; set; }
+        public int IdentityAccountId { get; set; }
+        public string IdentityRoleId { get; set; }
         public bool Active { get; set; }
     
-        public virtual Church Church { get; set; }
+        public virtual IdentityAccount IdentityAccount { get; set; }
+        public virtual IdentityRole IdentityRole { get; set; }
     }
 }

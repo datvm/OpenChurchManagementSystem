@@ -4,19 +4,20 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using OpenChurchManagementSystem.WebApi.Models;
+using SkyWeb.DatVM.Mvc.Autofac;
+using OpenChurchManagementSystem.WebApi.Models.Identities;
 
 namespace OpenChurchManagementSystem.WebApi.Providers
 {
     public class ApplicationOAuthProvider : OAuthAuthorizationServerProvider
     {
         private readonly string _publicClientId;
-
+        
         public ApplicationOAuthProvider(string publicClientId)
         {
             if (publicClientId == null)
@@ -30,17 +31,24 @@ namespace OpenChurchManagementSystem.WebApi.Providers
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
+            var church = DependencyUtils.Resolve<IdentityChurch>();
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            if (church == null || church.ChurchDomain == null)
+            {
+                context.SetError("bad_request", "Invalid Hostname");
+                return;
+            }
 
+            var user = await userManager.FindAsync(context?.UserName, context?.Password, church.Church.Id);
+            
             if (user == null)
             {
                 context.SetError("invalid_grant", "The user name or password is incorrect.");
                 return;
             }
-
+            
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
-               OAuthDefaults.AuthenticationType);
+                OAuthDefaults.AuthenticationType);
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
                 CookieAuthenticationDefaults.AuthenticationType);
 

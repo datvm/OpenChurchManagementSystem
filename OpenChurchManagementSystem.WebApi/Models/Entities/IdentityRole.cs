@@ -12,23 +12,18 @@ namespace OpenChurchManagementSystem.WebApi.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Church
+    public partial class IdentityRole
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Church()
+        public IdentityRole()
         {
-            this.ChurchDomains = new HashSet<ChurchDomain>();
-            this.IdentityAccounts = new HashSet<IdentityAccount>();
+            this.IdentityAccountRoles = new HashSet<IdentityAccountRole>();
         }
     
-        public int Id { get; set; }
+        public string Id { get; set; }
         public string Name { get; set; }
-        public string Description { get; set; }
-        public bool Active { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChurchDomain> ChurchDomains { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IdentityAccount> IdentityAccounts { get; set; }
+        public virtual ICollection<IdentityAccountRole> IdentityAccountRoles { get; set; }
     }
 }

@@ -1,5 +1,8 @@
 ﻿using OpenChurchManagementSystem.WebApi.Models.Entities;
 using OpenChurchManagementSystem.WebApi.Models.Entities.Services;
+using OpenChurchManagementSystem.WebApi.Models.Identities;
+using OpenChurchManagementSystem.WebApi.Models.ViewModels;
+using SkyWeb.DatVM.Mvc.Autofac;
 using SkyWeb.DatVM.WebApi;
 using System;
 using System.Collections.Generic;
@@ -13,9 +16,9 @@ namespace OpenChurchManagementSystem.WebApi.Framework
 {
     public class BaseChurchApiController : BaseApiController
     {
-
-        public int ChurchId { get; private set; }
-        public ChurchDomain ChurchDomain { get; private set; }
+        
+        public ChurchViewModel Church { get; private set; }
+        public ChurchDomainViewModel ChurchDomain { get; private set; }
         public string ResolvedIP { get; private set; }
 
         protected override void Initialize(HttpControllerContext controllerContext)
@@ -26,9 +29,10 @@ namespace OpenChurchManagementSystem.WebApi.Framework
                 request.Headers.GetValues("CF-Connecting-IP").First() :
                 this.GetClientIp();
 
-            var uri = controllerContext.Request.RequestUri;
-            this.ChurchDomain = this.Service<IChurchDomainService>()
-                .FindDomain(request.RequestUri.Host, request.RequestUri.Port);
+            var identityChurch = DependencyUtils.Resolve<IdentityChurch>();
+            
+            this.Church =  identityChurch.Church;
+            this.ChurchDomain = identityChurch.ChurchDomain;
 
             base.Initialize(controllerContext);
         }

@@ -12,23 +12,29 @@ namespace OpenChurchManagementSystem.WebApi.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class Church
+    public partial class IdentityAccount
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Church()
+        public IdentityAccount()
         {
-            this.ChurchDomains = new HashSet<ChurchDomain>();
-            this.IdentityAccounts = new HashSet<IdentityAccount>();
+            this.IdentityAccountRoles = new HashSet<IdentityAccountRole>();
+            this.IdentityClaims = new HashSet<IdentityClaim>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public string Description { get; set; }
+        public int ChurchId { get; set; }
+        public string UserName { get; set; }
+        public string Email { get; set; }
+        public string PasswordHash { get; set; }
+        public string SecurityStamp { get; set; }
+        public string AdminNote { get; set; }
+        public string SysAdminNote { get; set; }
         public bool Active { get; set; }
     
+        public virtual Church Church { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ChurchDomain> ChurchDomains { get; set; }
+        public virtual ICollection<IdentityAccountRole> IdentityAccountRoles { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IdentityAccount> IdentityAccounts { get; set; }
+        public virtual ICollection<IdentityClaim> IdentityClaims { get; set; }
     }
 }

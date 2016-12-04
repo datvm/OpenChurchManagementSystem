@@ -8,16 +8,16 @@ namespace OpenChurchManagementSystem.WebApi.Models.Entities.Services
     public partial interface IChurchDomainService
     {
 
-        ChurchDomain FindDomain(string hostName, int port);
+        ChurchDomain FindDomain(string protocol, string hostName, int port);
 
     }
 
     public partial class ChurchDomainService
     {
 
-        public ChurchDomain FindDomain(string hostName, int port)
+        public ChurchDomain FindDomain(string protocol, string hostName, int port)
         {
-            return this.FirstOrDefaultActive(q => q.Hostname == hostName && q.Port == port);
+            return this.FirstOrDefaultActive(q => q.Protocol == protocol && q.Hostname == hostName && q.Port == port);
         }
 
     }

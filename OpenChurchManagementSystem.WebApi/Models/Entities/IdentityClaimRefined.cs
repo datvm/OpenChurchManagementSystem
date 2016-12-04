@@ -12,7 +12,7 @@ namespace OpenChurchManagementSystem.WebApi.Models.Entities
     using System;
     using System.Collections.Generic;
     
-    public partial class AspNetUser : SkyWeb.DatVM.Data.IEntity
+    public partial class IdentityClaim : SkyWeb.DatVM.Data.IEntity
     {
     }
 }

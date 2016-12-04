@@ -5,11 +5,17 @@
     <!-- Diagram content (shape and connector positions) -->
     <edmx:Diagrams>
       <Diagram DiagramId="b8a575ef4f34473988a8c6b9048ef5cd" Name="Diagram1">
-        <EntityTypeShape EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.AspNetUser" Width="1.5" PointX="3" PointY="1.125" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.Church" Width="1.5" PointX="0.75" PointY="3.375" IsExpanded="true" />
-        <EntityTypeShape EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.ChurchDomain" Width="1.5" PointX="3" PointY="5.625" IsExpanded="true" />
-        <AssociationConnector Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_AspNetUsers_Church" ManuallyRouted="false" />
-        <AssociationConnector Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_ChurchDomain_Church" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.Church" Width="1.5" PointX="0.75" PointY="4.125" />
+        <EntityTypeShape EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.ChurchDomain" Width="1.5" PointX="3" PointY="6.125" />
+        <EntityTypeShape EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccount" Width="1.5" PointX="3" PointY="2" />
+        <EntityTypeShape EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityAccountRole" Width="1.5" PointX="5.25" PointY="2.625" />
+        <EntityTypeShape EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityClaim" Width="1.5" PointX="5.25" PointY="5.625" />
+        <EntityTypeShape EntityType="OpenChurchManagementSystem.WebApi.Models.Entities.IdentityRole" Width="1.5" PointX="3" PointY="9.875" />
+        <AssociationConnector Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_ChurchDomain_Church" />
+        <AssociationConnector Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccount_Church" />
+        <AssociationConnector Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccountRole_IdentityAccount" />
+        <AssociationConnector Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityClaim_IdentityAccount" />
+        <AssociationConnector Association="OpenChurchManagementSystem.WebApi.Models.Entities.FK_IdentityAccountRole_IdentityRole" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
