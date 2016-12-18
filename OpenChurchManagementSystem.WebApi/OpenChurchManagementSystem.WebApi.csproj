@@ -199,6 +199,10 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\SysAdmin\Controllers\AccountController.cs" />
+    <Compile Include="Areas\SysAdmin\SysAdminAreaRegistration.cs" />
+    <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\InfoController.cs" />
     <Compile Include="Framework\BaseChurchApiController.cs" />
     <Compile Include="Framework\DomainValidationFilter.cs" />
     <Compile Include="Global.asax.cs">
@@ -370,6 +374,7 @@
     <Content Include="Models\Entities\OcmsEntities.edmx.diagram">
       <DependentUpon>OcmsEntities.edmx</DependentUpon>
     </Content>
+    <Content Include="Areas\SysAdmin\Views\web.config" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="Models\Entities\OcmsEntities.Context.tt">
       <Generator>TextTemplatingFileGenerator</Generator>
@@ -425,7 +430,8 @@
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Models\" />
     <Folder Include="Areas\Admin\Views\Shared\" />
-    <Folder Include="Controllers\" />
+    <Folder Include="Areas\SysAdmin\Models\" />
+    <Folder Include="Areas\SysAdmin\Views\Shared\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -454,7 +460,7 @@
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>40720</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
-          <IISUrl>http://localhost:40720/</IISUrl>
+          <IISUrl>http://localhost:40721/</IISUrl>
           <NTLMAuthentication>False</NTLMAuthentication>
           <UseCustomServer>False</UseCustomServer>
           <CustomServerUrl>

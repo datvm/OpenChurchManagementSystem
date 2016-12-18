@@ -14,8 +14,17 @@ namespace OpenChurchManagementSystem.WebApi.Models.Entities
     public partial class IdentityRole : IRole<string>
     {
 
+        public const string AdminRoles = "SysAdmin,Admin";
+
     }
 
+    public enum IdentityRoles
+    {
+        SysAdmin,
+        Admin,
+
+    }
+    
 }
 
 namespace OpenChurchManagementSystem.WebApi.Models.Identities

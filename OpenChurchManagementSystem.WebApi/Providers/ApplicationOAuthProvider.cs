@@ -26,6 +26,8 @@ namespace OpenChurchManagementSystem.WebApi.Providers
             }
 
             _publicClientId = publicClientId;
+
+            
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
@@ -96,11 +98,14 @@ namespace OpenChurchManagementSystem.WebApi.Providers
 
         public static AuthenticationProperties CreateProperties(string userName)
         {
+            var church = DependencyUtils.Resolve<IdentityChurch>();
             IDictionary<string, string> data = new Dictionary<string, string>
             {
-                { "userName", userName }
+                { "userName", userName },
+                { "churchId", church.Church.Id.ToString() },
             };
             return new AuthenticationProperties(data);
         }
+       
     }
 }

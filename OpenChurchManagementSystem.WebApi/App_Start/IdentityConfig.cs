@@ -63,6 +63,19 @@ namespace OpenChurchManagementSystem.WebApi
             throw new NotSupportedException("Please use the overload with tenant Id");
         }
 
+        public override Task<IdentityResult> CreateAsync(IdentityAccount user, string password)
+        {
+            throw new NotSupportedException("Please use the overload with Church Id.");
+        }
+
+        public async Task<IdentityAccount> FindAsync(string userName, int? churchId)
+        {
+            var service = DependencyUtils.Resolve<IIdentityAccountService>();
+            var user = await service.FindUsernameByChurch(userName, churchId);
+
+            return user;
+        }
+
         public async Task<IdentityAccount> FindAsync(string userName, string password, int? churchId)
         {
             var service = DependencyUtils.Resolve<IIdentityAccountService>();
@@ -89,6 +102,16 @@ namespace OpenChurchManagementSystem.WebApi
             {
                 return null;
             }
+        }
+
+        public async Task<IdentityAccount> CreateAsync(IdentityAccount account, string password, int churchId)
+        {
+            var service = DependencyUtils.Resolve<IIdentityAccountService>();
+            account.PasswordHash = this.PasswordHasher.HashPassword(password);
+            account.ChurchId = churchId;
+            await service.CreateAsync(account);
+
+            return account;
         }
 
     }
