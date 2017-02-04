@@ -15,7 +15,7 @@ namespace OpenChurchManagementSystem.WebApi.Controllers
     {
         
         [AllowAnonymous]
-        [HttpGet, Route("ChurchName")]
+        [HttpGet, System.Web.Http.Route("ChurchName")]
         public string ChurchName()
         {
             if (this.Church == null)
@@ -27,7 +27,7 @@ namespace OpenChurchManagementSystem.WebApi.Controllers
         }
         
         [AllowAnonymous]
-        [HttpGet, Route("UserInfo")]
+        [HttpGet, System.Web.Http.Route("UserInfo")]
         public string UserInfo()
         {
             if (!this.User.Identity.IsAuthenticated)

@@ -34,6 +34,7 @@ namespace OpenChurchManagementSystem.WebApi.Models.Identities
 
     public class AspNetIdentityUserStore :
         IUserStore<IdentityAccount, int>,
+        IUserRoleStore<IdentityAccount, int>,
         IUserClaimStore<IdentityAccount, int>,
         IUserPasswordStore<IdentityAccount, int>,
         IUserSecurityStampStore<IdentityAccount, int>
@@ -56,6 +57,37 @@ namespace OpenChurchManagementSystem.WebApi.Models.Identities
                 DependencyUtils.Resolve<IIdentityAccountService>(),
                 DependencyUtils.Resolve<IIdentityClaimService>());
         }
+
+        #region IUserRoleStore
+
+        public async Task AddToRoleAsync(IdentityAccount user, string roleName)
+        {
+            var service = this.Resolve<IIdentityAccountRoleService>();
+            await service.AddToRole(user.Id, roleName);
+        }
+
+        public async Task RemoveFromRoleAsync(IdentityAccount user, string roleName)
+        {
+            var service = this.Resolve<IIdentityAccountRoleService>();
+            await service.RemoveFromRole(user.Id, roleName);
+        }
+
+        public async Task<IList<string>> GetRolesAsync(IdentityAccount user)
+        {
+            var service = this.Resolve<IIdentityAccountRoleService>();
+            return 
+                await service.GetAllRoles(user.Id)
+                .Select(q => q.Name)
+                .ToListAsync();
+        }
+
+        public async Task<bool> IsInRoleAsync(IdentityAccount user, string roleName)
+        {
+            var service = this.Resolve<IIdentityAccountRoleService>();
+            return await service.IsInRole(user.Id, roleName);
+        }
+
+        #endregion
 
         #region IUserStore
 

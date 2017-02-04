@@ -24,16 +24,16 @@ namespace OpenChurchManagementSystem.WebApi
         {
             // Configure the db context and user manager to use a single instance per request
             app.CreatePerOwinContext<ApplicationUserManager>(ApplicationUserManager.Create);
-            app.CreatePerOwinContext(AspNetIdentityUserStore.Create);
-            app.CreatePerOwinContext(AspNetIdentityRoleStore.Create);
+            //app.CreatePerOwinContext(AspNetIdentityUserStore.Create);
+            //app.CreatePerOwinContext(AspNetIdentityRoleStore.Create);
+            app.CreatePerOwinContext< AspNetIdentityRoleManager>(AspNetIdentityRoleManager.Create);
 
             // Configure the application for OAuth based flow
             PublicClientId = "self";
             OAuthOptions = new OAuthAuthorizationServerOptions
             {
-                TokenEndpointPath = new PathString("/api/v1/account/auth"),
+                TokenEndpointPath = new PathString("/api/v1/auth"),
                 Provider = new ApplicationOAuthProvider(PublicClientId),
-                AuthorizeEndpointPath = new PathString("/api/Account/ExternalLogin"),
                 AccessTokenExpireTimeSpan = TimeSpan.FromDays(14),
                 // In production mode set AllowInsecureHttp = false
                 AllowInsecureHttp = true,

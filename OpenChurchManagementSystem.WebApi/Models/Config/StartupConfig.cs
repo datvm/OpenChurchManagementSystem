@@ -1,17 +1,16 @@
-﻿using SkyWeb.DatVM.Mvc.Autofac;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using Autofac;
 using OpenChurchManagementSystem.WebApi.Models.Identities;
-using AutoMapper;
+using SkyWeb.DatVM.WebApi;
 
 namespace OpenChurchManagementSystem.WebApi.Models.Config
 {
     public class StartupConfig
     {
-
+        
         public static void Config()
         {
             ConfigAutofac();
@@ -21,7 +20,7 @@ namespace OpenChurchManagementSystem.WebApi.Models.Config
         {
             var dbContextType = typeof(Entities.OcmsEntities);
 
-            AutofacInitializer.Initialize(
+            WebApiAutofacIntializer.Initialize(
                 dbContextType.Assembly,
                 dbContextType,
                 null,

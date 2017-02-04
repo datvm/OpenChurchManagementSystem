@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using OcmsEntities = OpenChurchManagementSystem.WebApi.Models.Entities;
 using OpenChurchManagementSystem.WebApi.Models.Entities.Services;
 using SkyWeb.DatVM.Mvc.Autofac;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
 
 namespace OpenChurchManagementSystem.WebApi.Models.Entities
 {
@@ -18,17 +20,30 @@ namespace OpenChurchManagementSystem.WebApi.Models.Entities
 
     }
 
-    public enum IdentityRoles
+    public enum DbIdentityRole
     {
         SysAdmin,
         Admin,
 
     }
-    
+
 }
 
 namespace OpenChurchManagementSystem.WebApi.Models.Identities
 {
+    
+    public class AspNetIdentityRoleManager : RoleManager<OcmsEntities.IdentityRole, string>
+    {
+
+        public AspNetIdentityRoleManager(IRoleStore<OcmsEntities.IdentityRole, string> store) : base(store) { }
+
+        public static AspNetIdentityRoleManager Create(IdentityFactoryOptions<AspNetIdentityRoleManager> options, IOwinContext context)
+        {
+            var roleStore = new AspNetIdentityRoleStore();
+            return new AspNetIdentityRoleManager(roleStore);
+        }
+
+    }
 
     public class AspNetIdentityRoleStore : IRoleStore<OcmsEntities.IdentityRole>
     {
